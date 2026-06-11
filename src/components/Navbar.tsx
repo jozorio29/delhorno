@@ -63,13 +63,6 @@ const Navbar = () => {
             ))}
           </nav>
 
-          <Link
-            href="/arma-tu-pizza"
-            className="hidden shrink-0 rounded-full border border-[#d8c9b4] bg-transparent px-6 py-3 text-sm font-semibold text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-white/55 hover:text-[var(--brand)] dark:border-[#4d4136] dark:hover:bg-white/10 lg:inline-flex"
-          >
-            {t("nav_build")}
-          </Link>
-
           <div className="shrink-0">
             <NavIcons />
           </div>
@@ -108,13 +101,6 @@ const Navbar = () => {
                 {t(item.labelKey)}
               </Link>
             ))}
-            <Link
-              href="/arma-tu-pizza"
-              className="mt-1 rounded-full border border-[#d8c9b4] bg-transparent px-4 py-3 text-center text-sm font-semibold text-[var(--text)] dark:border-[#4d4136]"
-              onClick={() => setOpen(false)}
-            >
-              {t("nav_build")}
-            </Link>
           </div>
         </div>
       )}

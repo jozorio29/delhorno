@@ -36,6 +36,12 @@ const Hero = () => {
             >
               {t("hero_cta")}
             </Link>
+            <Link
+              href="/arma-tu-pizza"
+              className="rounded-full border border-[var(--line-strong)] bg-[var(--surface)]/55 px-7 py-3 text-sm font-semibold text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-[var(--surface)] hover:text-[var(--brand)]"
+            >
+              {t("nav_build")}
+            </Link>
           </div>
 
           <div className="mt-10 flex items-center justify-center gap-8 md:gap-12">

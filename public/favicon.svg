@@ -1,0 +1,7 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#DCEBD8"/>
+  <path d="M146 199C158 136 199 103 256 103C313 103 354 136 366 199" stroke="#25581F" stroke-width="28" stroke-linecap="round"/>
+  <path d="M167 200H345" stroke="#25581F" stroke-width="20" stroke-linecap="round"/>
+  <path d="M212 247C201 227 209 205 226 190C223 211 239 221 243 239C248 219 266 203 263 178C289 198 304 219 296 247C321 231 321 203 314 184C344 210 354 242 339 272C325 300 295 316 256 316C217 316 187 300 173 272C164 253 170 229 184 211C183 230 191 243 212 247Z" fill="#8B0000"/>
+  <text x="256" y="406" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="122" font-weight="900" letter-spacing="-6" fill="#25581F">DH</text>
+</svg>

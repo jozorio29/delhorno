@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/LanguageProvider";
 import { formatPY } from "@/lib/money";
 import { useCart } from "@/store/useCart";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { TrashIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 export default function CartDrawer() {
+  const { t } = useI18n();
   const items = useCart((s) => s.items);
   const remove = useCart((s) => s.remove);
   const inc = useCart((s) => s.inc);
@@ -18,21 +20,21 @@ export default function CartDrawer() {
 
   return (
     <div
-      className="glass-surface z-50 flex w-80 max-w-[90vw] flex-col gap-6 rounded-2xl p-4 text-zinc-900"
+      className="glass-surface z-50 flex w-80 max-w-[90vw] flex-col gap-6 rounded-2xl p-4 text-[var(--text)]"
     >
       {items.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 py-10 text-center">
           <ShoppingCartIcon className="h-12 w-12 text-gray-400" />
-          <h3 className="text-lg font-semibold text-zinc-800">
-            Tu carrito está vacío
+          <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+            {t("cart_empty_title")}
           </h3>
-          <p className="text-sm text-gray-500">
-            Agrega productos para comenzar tu pedido.
+          <p className="text-sm text-gray-500 dark:text-[#b3a48f]">
+            {t("cart_empty_copy")}
           </p>
         </div>
       ) : (
         <>
-          <h2 className="text-xl">Mi carrito</h2>
+          <h2 className="text-xl">{t("drawer_title")}</h2>
           <div className="flex flex-col gap-8">
             {/* Cart Item */}
             {items.map((item) => (
@@ -58,13 +60,13 @@ export default function CartDrawer() {
                     <div className="flex items-center justify-between gap-8">
                       <h3 className="font-semibold">{item.name}</h3>
 
-                      <div className="flex items-center gap-2 rounded-sm bg-gray-50 p-1">
+                      <div className="flex items-center gap-2 rounded-sm bg-gray-50 p-1 dark:bg-white/10">
                         {formatPY(item.price)}
                       </div>
                     </div>
                     {/* DESCRIPTION */}
                     {item.description && (
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-gray-600 dark:text-[#b3a48f]">
                         {item.description}
                       </div>
                     )}
@@ -75,16 +77,16 @@ export default function CartDrawer() {
                       <button
                         onClick={() => dec(item.productId)}
                         disabled={item.quantity <= 1}
-                        className="h-6 w-6 rounded ring-1 ring-gray-300 hover:bg-gray-50"
-                        aria-label="Disminuir cantidad"
+                        className="h-6 w-6 rounded ring-1 ring-gray-300 hover:bg-gray-50 dark:ring-[#4d4136] dark:hover:bg-white/10"
+                        aria-label={t("cart_dec")}
                       >
                         -
                       </button>
                       <span className="w-8 text-center">{item.quantity}</span>
                       <button
                         onClick={() => inc(item.productId)}
-                        className="h-6 w-6 rounded ring-1 ring-gray-300 hover:bg-gray-50"
-                        aria-label="Aumentar cantidad"
+                        className="h-6 w-6 rounded ring-1 ring-gray-300 hover:bg-gray-50 dark:ring-[#4d4136] dark:hover:bg-white/10"
+                        aria-label={t("cart_inc")}
                       >
                         +
                       </button>
@@ -105,26 +107,26 @@ export default function CartDrawer() {
           {/* Bottom */}
           <div>
             <div className="flex justify-between items-center font-semibold">
-              <span>Subtotal</span>
+              <span>{t("cart_subtotal")}</span>
               <span>{formatPY(subtotal)}</span>
             </div>
-            <p className="mb-4 mt-2 text-sm text-gray-600">
-              El envío se confirma por WhatsApp.
+            <p className="mb-4 mt-2 text-sm text-gray-600 dark:text-[#b3a48f]">
+              {t("cart_ship_note")}
             </p>
             <div className="flex justify-between text-sm">
               <Link
                 href="/cart"
                 onClick={() => toggle(false)}
-                className="rounded-md py-3 px-4 ring-1 ring-gray-300"
+                className="rounded-md py-3 px-4 ring-1 ring-gray-300 dark:ring-[#4d4136]"
               >
-                Ver carrito
+                {t("cart_view")}
               </Link>{" "}
               <Link
                 href="/cart"
                 onClick={() => toggle(false)}
                 className="rounded-lg bg-[var(--brand)] px-4 py-3 font-semibold text-white shadow-lg transition hover:bg-[#a34726]"
               >
-                Finalizar pedido
+                {t("cart_checkout")}
               </Link>
             </div>
           </div>

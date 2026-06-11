@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n/LanguageProvider";
 
 type Review = {
   author_name: string;
@@ -25,6 +26,7 @@ const Opiniones = ({
   placeId: string;
   limit?: number;
 }) => {
+  const { t } = useI18n();
   const [data, setData] = useState<PlaceVM | null>(null);
   const [hasError, setHasError] = useState(false);
 
@@ -70,18 +72,19 @@ const Opiniones = ({
   return (
     <section id="opiniones" className="container-shell reveal py-16 md:py-20">
       <div className="reveal reveal-1 mb-10">
-        <p className="text-xs font-bold tracking-[0.2em] text-[#ad4f2b]">
-          RESEÑAS REALES
+        <p className="text-xs font-bold tracking-[0.2em] text-[#ad4f2b] dark:text-[#e08a6a]">
+          {t("reviews_eyebrow")}
         </p>
-        <h2 className="section-title mt-2">Lo que dice la comunidad</h2>
+        <h2 className="section-title mt-2">{t("reviews_title")}</h2>
         {data && (
           <p className="mt-3 text-base text-[var(--muted)]">
-            ⭐ {data.rating.toFixed(1)} · {data.user_ratings_total} opiniones
+            ⭐ {data.rating.toFixed(1)} · {data.user_ratings_total}{" "}
+            {t("reviews_count")}
           </p>
         )}
         {!data && !hasError && (
           <p className="mt-3 text-base text-[var(--muted)]">
-            Cargando opiniones...
+            {t("reviews_loading")}
           </p>
         )}
       </div>
@@ -119,7 +122,7 @@ const Opiniones = ({
                   {"★".repeat(Math.round(review.rating))}
                   {"☆".repeat(5 - Math.round(review.rating))}
                 </div>
-                <p className="flex-1 text-center leading-relaxed text-zinc-800">
+                <p className="flex-1 text-center leading-relaxed text-zinc-800 dark:text-zinc-200">
                   {review.text}
                 </p>
               </article>

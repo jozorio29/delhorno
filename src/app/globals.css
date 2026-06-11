@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --bg: #faf6ef;
   --bg-soft: #faf6ef;
+  --bg-veil: 250, 246, 239;
   --surface: #ffffff;
   --surface-strong: #f3ead9;
   --text: #1f1408;
@@ -12,6 +15,21 @@
   --brand-deep: #9f3b22;
   --line: #ece2d2;
   --line-strong: #d8c9b4;
+}
+
+.dark {
+  --bg: #140e0a;
+  --bg-soft: #19110c;
+  --bg-veil: 20, 14, 10;
+  --surface: #211712;
+  --surface-strong: #2c1e16;
+  --text: #fff5e8;
+  --muted: #c7b39d;
+  --brand: #e56f43;
+  --brand-2: #f08a55;
+  --brand-deep: #c95632;
+  --line: #3d2c22;
+  --line-strong: #604536;
 }
 
 @theme inline {
@@ -25,6 +43,7 @@ body {
   font-family: var(--font-body), "Avenir Next", "Segoe UI", sans-serif;
   height: 100%;
   min-height: 100%;
+  transition: background-color 250ms ease, color 250ms ease;
   @apply antialiased;
 }
 
@@ -63,6 +82,15 @@ h4 {
   border: 1px solid var(--line);
 }
 
+.dark .glass-surface {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.025), transparent 48%),
+    var(--surface);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.035) inset,
+    0 18px 45px rgba(0, 0, 0, 0.16);
+}
+
 .depth-card {
   transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
 }
@@ -82,7 +110,7 @@ h4 {
 }
 
 .site-navbar {
-  background: rgba(250, 246, 239, 0.97);
+  background: rgba(var(--bg-veil), 0.97);
   border-bottom: 1px solid rgba(216, 201, 180, 0.72);
   color: var(--text);
   isolation: isolate;
@@ -94,7 +122,7 @@ h4 {
 }
 
 .site-navbar--scrolled {
-  background: rgba(250, 246, 239, 0.94);
+  background: rgba(var(--bg-veil), 0.94);
   border-bottom-color: rgba(138, 122, 102, 0.24);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
@@ -103,37 +131,87 @@ h4 {
   backdrop-filter: blur(20px) saturate(115%);
 }
 
+.dark .site-navbar {
+  background: rgba(20, 14, 10, 0.9);
+  border-bottom-color: rgba(229, 111, 67, 0.14);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
+}
+
+.dark .site-navbar--scrolled {
+  background: rgba(20, 14, 10, 0.95);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 12px 34px rgba(0, 0, 0, 0.38);
+}
+
 .hero-section {
   background-color: var(--bg);
   background-image:
     linear-gradient(
       to bottom,
       var(--bg) 0%,
-      rgba(250, 246, 239, 0.96) 4%,
-      rgba(250, 246, 239, 0.68) 11%,
-      rgba(250, 246, 239, 0.2) 22%,
+      rgba(var(--bg-veil), 0.96) 4%,
+      rgba(var(--bg-veil), 0.68) 11%,
+      rgba(var(--bg-veil), 0.2) 22%,
       transparent 32%,
       transparent 65%,
-      rgba(250, 246, 239, 0.18) 75%,
-      rgba(250, 246, 239, 0.64) 87%,
-      rgba(250, 246, 239, 0.95) 96%,
+      rgba(var(--bg-veil), 0.18) 75%,
+      rgba(var(--bg-veil), 0.64) 87%,
+      rgba(var(--bg-veil), 0.95) 96%,
       var(--bg) 100%
     ),
     radial-gradient(
       ellipse at center,
-      rgba(250, 246, 239, 0.98) 0%,
-      rgba(250, 246, 239, 0.9) 30%,
-      rgba(250, 246, 239, 0.28) 61%,
-      rgba(250, 246, 239, 0.08) 100%
+      rgba(var(--bg-veil), 0.98) 0%,
+      rgba(var(--bg-veil), 0.9) 30%,
+      rgba(var(--bg-veil), 0.28) 61%,
+      rgba(var(--bg-veil), 0.08) 100%
     ),
     linear-gradient(
-      rgba(250, 246, 239, 0.08),
-      rgba(250, 246, 239, 0.08)
+      rgba(var(--bg-veil), 0.08),
+      rgba(var(--bg-veil), 0.08)
     ),
     url("/hero-doodle-bg.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.dark .hero-section {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(20, 14, 10, 0.98) 0%,
+      rgba(20, 14, 10, 0.76) 17%,
+      rgba(20, 14, 10, 0.48) 43%,
+      rgba(20, 14, 10, 0.58) 68%,
+      rgba(20, 14, 10, 0.96) 100%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(73, 40, 25, 0.72) 0%,
+      rgba(34, 21, 14, 0.58) 38%,
+      rgba(20, 14, 10, 0.2) 72%
+    ),
+    url("/hero-doodle-bg.jpg");
+  background-blend-mode: normal, normal, multiply;
+}
+
+.dark .hero-fade {
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  color-scheme: dark;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #8f7b68;
 }
 
 @media (max-width: 767px) {
@@ -142,25 +220,43 @@ h4 {
       linear-gradient(
         to bottom,
         var(--bg) 0%,
-        rgba(250, 246, 239, 0.95) 5%,
-        rgba(250, 246, 239, 0.62) 13%,
-        rgba(250, 246, 239, 0.16) 24%,
+        rgba(var(--bg-veil), 0.95) 5%,
+        rgba(var(--bg-veil), 0.62) 13%,
+        rgba(var(--bg-veil), 0.16) 24%,
         transparent 34%,
         transparent 64%,
-        rgba(250, 246, 239, 0.18) 75%,
-        rgba(250, 246, 239, 0.66) 88%,
-        rgba(250, 246, 239, 0.96) 97%,
+        rgba(var(--bg-veil), 0.18) 75%,
+        rgba(var(--bg-veil), 0.66) 88%,
+        rgba(var(--bg-veil), 0.96) 97%,
         var(--bg) 100%
       ),
       radial-gradient(
         ellipse at center,
-        rgba(250, 246, 239, 0.99) 0%,
-        rgba(250, 246, 239, 0.94) 45%,
-        rgba(250, 246, 239, 0.35) 78%,
-        rgba(250, 246, 239, 0.16) 100%
+        rgba(var(--bg-veil), 0.99) 0%,
+        rgba(var(--bg-veil), 0.94) 45%,
+        rgba(var(--bg-veil), 0.35) 78%,
+        rgba(var(--bg-veil), 0.16) 100%
       ),
       url("/hero-doodle-bg.jpg");
     background-position: center;
+    background-size: auto 100%;
+  }
+
+  .dark .hero-section {
+    background-image:
+      linear-gradient(
+        to bottom,
+        rgba(20, 14, 10, 0.98) 0%,
+        rgba(20, 14, 10, 0.74) 22%,
+        rgba(20, 14, 10, 0.5) 52%,
+        rgba(20, 14, 10, 0.96) 100%
+      ),
+      radial-gradient(
+        ellipse at center,
+        rgba(73, 40, 25, 0.68) 0%,
+        rgba(20, 14, 10, 0.28) 75%
+      ),
+      url("/hero-doodle-bg.jpg");
     background-size: auto 100%;
   }
 }

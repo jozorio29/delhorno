@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="min-h-dvh text-zinc-900">
+      <main className="min-h-dvh text-[var(--text)]">
         <Hero />
         <Promos />
         <Opiniones placeId={PLACE_ID} limit={3} />

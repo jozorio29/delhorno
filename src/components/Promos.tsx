@@ -7,18 +7,34 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n/LanguageProvider";
+import type { DictKey } from "@/lib/i18n/translations";
 
-const PROMOS = [
+type Promo = {
+  id: string;
+  image: string;
+  alt: string;
+  eyebrow: DictKey;
+  title: DictKey;
+  description: DictKey;
+  detail: DictKey;
+  href: string;
+  action: DictKey;
+  accent: string;
+  imagePosition: string;
+};
+
+const PROMOS: Promo[] = [
   {
     id: "students",
     image: "/promo-students.jpg",
     alt: "Pizza grande en el salón de Del Horno",
-    eyebrow: "Promo estudiantes",
-    title: "Ahorrá Gs. 10.000",
-    description: "En pizzas XL, cualquier sabor.",
-    detail: "De 09:00 a 14:00",
+    eyebrow: "promo1_eyebrow",
+    title: "promo1_title",
+    description: "promo1_desc",
+    detail: "promo1_detail",
     href: "/arma-tu-pizza",
-    action: "Elegir mi pizza",
+    action: "promo1_action",
     accent: "bg-[#285721]",
     imagePosition: "object-center",
   },
@@ -26,12 +42,12 @@ const PROMOS = [
     id: "beer",
     image: "/promo-beer.jpg",
     alt: "Dos chopps de cerveza brindando",
-    eyebrow: "Hoy la segunda va gratis",
-    title: "2x1 en Chopp Munich",
-    description: "Los martes son para disfrutar.",
-    detail: "Todos los martes",
+    eyebrow: "promo2_eyebrow",
+    title: "promo2_title",
+    description: "promo2_desc",
+    detail: "promo2_detail",
     href: "/menu#cervezas",
-    action: "Ver cervezas",
+    action: "promo2_action",
     accent: "bg-[#8b1718]",
     imagePosition: "object-center",
   },
@@ -39,12 +55,12 @@ const PROMOS = [
     id: "pizza-friday",
     image: "/promo-pizza-friday.jpg",
     alt: "Pizza clásica compartida entre varias personas",
-    eyebrow: "Sabores clásicos",
-    title: "Viernes de Pizza Corrida",
-    description: "Gs. 50.000 por persona.",
-    detail: "De 11:30 a 13:00",
+    eyebrow: "promo3_eyebrow",
+    title: "promo3_title",
+    description: "promo3_desc",
+    detail: "promo3_detail",
     href: "/arma-tu-pizza",
-    action: "Ver sabores",
+    action: "promo3_action",
     accent: "bg-[#8b1718]",
     imagePosition: "object-center",
   },
@@ -53,6 +69,7 @@ const PROMOS = [
 const AUTOPLAY_DELAY = 6000;
 
 const Promos = () => {
+  const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -78,18 +95,16 @@ const Promos = () => {
     <section id="promos" className="container-shell reveal py-16 md:py-20">
       <div className="reveal reveal-1 mb-8">
         <p className="text-xs font-bold tracking-[0.24em] text-[var(--brand)]">
-          PROMOCIONES
+          {t("promos_eyebrow")}
         </p>
-        <h2 className="section-title mt-2">Siempre hay una buena excusa</h2>
-        <p className="section-copy mt-3 max-w-xl">
-          Beneficios para compartir, disfrutar y volver más seguido.
-        </p>
+        <h2 className="section-title mt-2">{t("promos_title")}</h2>
+        <p className="section-copy mt-3 max-w-xl">{t("promos_copy")}</p>
       </div>
 
       <div
         role="region"
         aria-roledescription="carrusel"
-        aria-label="Promociones de Del Horno"
+        aria-label={t("promos_region")}
         tabIndex={0}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -152,23 +167,23 @@ const Promos = () => {
                     <span
                       className={`inline-flex rounded-md px-4 py-2 text-xs font-black uppercase tracking-[0.16em] ${promo.accent}`}
                     >
-                      {promo.eyebrow}
+                      {t(promo.eyebrow)}
                     </span>
                     <h3 className="mt-5 text-4xl font-bold leading-[0.95] text-[#fff8e9] md:text-6xl">
-                      {promo.title}
+                      {t(promo.title)}
                     </h3>
                     <p className="mt-4 text-lg font-semibold text-white/90 md:text-2xl">
-                      {promo.description}
+                      {t(promo.description)}
                     </p>
                     <p className="mt-2 text-sm font-medium text-white/70 md:text-base">
-                      {promo.detail}
+                      {t(promo.detail)}
                     </p>
                     <Link
                       href={promo.href}
                       tabIndex={isActive ? 0 : -1}
                       className="mt-7 inline-flex rounded-full bg-[#fff8e9] px-6 py-3 text-sm font-bold text-[#7e2f1d] transition hover:bg-white"
                     >
-                      {promo.action}
+                      {t(promo.action)}
                     </Link>
                   </div>
                 </div>
@@ -180,7 +195,7 @@ const Promos = () => {
         <button
           type="button"
           onClick={goPrevious}
-          aria-label="Promoción anterior"
+          aria-label={t("promos_prev")}
           className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition hover:bg-[var(--brand)] md:grid"
         >
           <ChevronLeftIcon className="h-5 w-5" />
@@ -188,7 +203,7 @@ const Promos = () => {
         <button
           type="button"
           onClick={goNext}
-          aria-label="Siguiente promoción"
+          aria-label={t("promos_next")}
           className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm transition hover:bg-[var(--brand)] md:grid"
         >
           <ChevronRightIcon className="h-5 w-5" />
@@ -197,7 +212,7 @@ const Promos = () => {
         <div
           className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur-sm"
           role="tablist"
-          aria-label="Elegir promoción"
+          aria-label={t("promos_pick")}
         >
           {PROMOS.map((promo, index) => (
             <button
@@ -205,7 +220,7 @@ const Promos = () => {
               key={promo.id}
               role="tab"
               aria-selected={index === activeIndex}
-              aria-label={`Mostrar promoción ${index + 1}: ${promo.title}`}
+              aria-label={`${t("promos_show")} ${index + 1}: ${t(promo.title)}`}
               onClick={() => goTo(index)}
               className={`h-2.5 overflow-hidden rounded-full transition-all ${
                 index === activeIndex
@@ -234,7 +249,7 @@ const Promos = () => {
       </div>
 
       <p className="mt-3 text-center text-xs text-[var(--muted)] md:hidden">
-        Deslizá hacia los lados para ver más promociones.
+        {t("promos_hint")}
       </p>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import Row from "@/components/Row";
+import { useI18n } from "@/lib/i18n/LanguageProvider";
 import { formatPY } from "@/lib/money";
 import {
   buildWhatsAppOrderUrl,
@@ -9,10 +10,12 @@ import {
 import { useCart } from "@/store/useCart";
 import { FormEvent, useState } from "react";
 
+const DEFAULT_WHATSAPP_NUMBER = "595982000763";
 const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_ORDER_NUMBER ?? "";
+  process.env.NEXT_PUBLIC_WHATSAPP_ORDER_NUMBER ?? DEFAULT_WHATSAPP_NUMBER;
 
 export default function CartSummary({ subtotal }: { subtotal: number }) {
+  const { t } = useI18n();
   const items = useCart((state) => state.items);
   const [error, setError] = useState("");
   const [details, setDetails] = useState<OrderDetails>({
@@ -34,13 +37,8 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
     event.preventDefault();
     setError("");
 
-    if (!WHATSAPP_NUMBER) {
-      setError("No se configuró el número de WhatsApp del local.");
-      return;
-    }
-
     if (items.length === 0) {
-      setError("El carrito está vacío.");
+      setError(t("sum_empty"));
       return;
     }
 
@@ -50,31 +48,31 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
       details,
     });
 
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.location.assign(url);
   };
 
   return (
     <aside
       className="glass-surface reveal reveal-2 h-max rounded-2xl p-5 md:sticky md:top-24"
     >
-      <h2 className="mb-4 text-lg font-semibold text-zinc-900">
-        Resumen
+      <h2 className="mb-4 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+        {t("sum_title")}
       </h2>
 
       <div className="mt-4 flex flex-col gap-2">
-        <Row label="Subtotal" value={formatPY(subtotal)} />
-        <Row label="Envío" value="" muted />
-        <div className="border-t border-[#e7cfbd] pt-3" />
-        <Row label="Total" value={formatPY(subtotal)} strong />
+        <Row label={t("cart_subtotal")} value={formatPY(subtotal)} />
+        <Row label={t("sum_shipping")} value="" muted />
+        <div className="border-t border-[#e7cfbd] pt-3 dark:border-[#4d4136]" />
+        <Row label={t("sum_total")} value={formatPY(subtotal)} strong />
       </div>
 
       <form className="mt-6 space-y-4" onSubmit={sendOrder}>
         <div>
           <label
             htmlFor="customer-name"
-            className="mb-1.5 block text-sm font-semibold text-zinc-800"
+            className="mb-1.5 block text-sm font-semibold text-zinc-800 dark:text-zinc-200"
           >
-            Nombre
+            {t("sum_name")}
           </label>
           <input
             id="customer-name"
@@ -85,17 +83,17 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
             onChange={(event) =>
               updateDetails("customerName", event.target.value)
             }
-            placeholder="Nombre del cliente"
-            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)]"
+            placeholder={t("sum_name_ph")}
+            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)] dark:bg-[#221a13] dark:text-zinc-100"
           />
         </div>
 
         <div>
           <label
             htmlFor="fulfillment"
-            className="mb-1.5 block text-sm font-semibold text-zinc-800"
+            className="mb-1.5 block text-sm font-semibold text-zinc-800 dark:text-zinc-200"
           >
-            Tipo de entrega
+            {t("sum_fulfillment")}
           </label>
           <select
             id="fulfillment"
@@ -106,10 +104,10 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
                 event.target.value as OrderDetails["fulfillment"]
               )
             }
-            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)]"
+            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)] dark:bg-[#221a13] dark:text-zinc-100"
           >
-            <option value="delivery">Delivery</option>
-            <option value="pickup">Retiro en el local</option>
+            <option value="delivery">{t("sum_delivery")}</option>
+            <option value="pickup">{t("sum_pickup")}</option>
           </select>
         </div>
 
@@ -117,9 +115,9 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
           <div>
             <label
               htmlFor="delivery-address"
-              className="mb-1.5 block text-sm font-semibold text-zinc-800"
+              className="mb-1.5 block text-sm font-semibold text-zinc-800 dark:text-zinc-200"
             >
-              Dirección
+              {t("sum_address")}
             </label>
             <input
               id="delivery-address"
@@ -130,8 +128,8 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
               onChange={(event) =>
                 updateDetails("address", event.target.value)
               }
-              placeholder="Barrio, calle y referencia"
-              className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)]"
+              placeholder={t("sum_address_ph")}
+              className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)] dark:bg-[#221a13] dark:text-zinc-100"
             />
           </div>
         )}
@@ -139,9 +137,9 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
         <div>
           <label
             htmlFor="payment-method"
-            className="mb-1.5 block text-sm font-semibold text-zinc-800"
+            className="mb-1.5 block text-sm font-semibold text-zinc-800 dark:text-zinc-200"
           >
-            Forma de pago
+            {t("sum_payment")}
           </label>
           <select
             id="payment-method"
@@ -149,28 +147,28 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
             onChange={(event) =>
               updateDetails("paymentMethod", event.target.value)
             }
-            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)]"
+            className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)] dark:bg-[#221a13] dark:text-zinc-100"
           >
-            <option>Efectivo</option>
-            <option>Transferencia</option>
-            <option>Tarjeta al recibir</option>
+            <option value="Efectivo">{t("sum_cash")}</option>
+            <option value="Transferencia">{t("sum_transfer")}</option>
+            <option value="Tarjeta al recibir">{t("sum_card")}</option>
           </select>
         </div>
 
         <div>
           <label
             htmlFor="order-notes"
-            className="mb-1.5 block text-sm font-semibold text-zinc-800"
+            className="mb-1.5 block text-sm font-semibold text-zinc-800 dark:text-zinc-200"
           >
-            Aclaraciones
+            {t("sum_notes")}
           </label>
           <textarea
             id="order-notes"
             rows={3}
             value={details.notes}
             onChange={(event) => updateDetails("notes", event.target.value)}
-            placeholder="Ej.: sin cebolla, pagaré con 100.000"
-            className="w-full resize-none rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)]"
+            placeholder={t("sum_notes_ph")}
+            className="w-full resize-none rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2.5 text-sm outline-none transition focus:border-[var(--brand)] dark:bg-[#221a13] dark:text-zinc-100"
           />
         </div>
 
@@ -184,11 +182,9 @@ export default function CartSummary({ subtotal }: { subtotal: number }) {
           type="submit"
           className="w-full rounded-lg bg-[#25d366] px-4 py-3 text-center font-semibold text-white transition hover:bg-[#1fb85a]"
         >
-          Enviar pedido por WhatsApp
+          {t("sum_send")}
         </button>
-        <p className="text-xs text-[var(--muted)]">
-          Se abrirá WhatsApp con el pedido listo para enviar.
-        </p>
+        <p className="text-xs text-[var(--muted)]">{t("sum_wa_note")}</p>
       </form>
     </aside>
   );

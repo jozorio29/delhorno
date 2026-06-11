@@ -1,3 +1,7 @@
+"use client";
+
+import { useI18n } from "@/lib/i18n/LanguageProvider";
+import { trDesc, trName } from "@/lib/i18n/menu";
 import { formatPY } from "@/lib/money";
 import type { Product } from "@/lib/products";
 import { AddToCartButton } from "./AddToCartButton";
@@ -9,18 +13,20 @@ function toNumber(price: number | string) {
 }
 
 export default function MenuProductRow({ product }: { product: Product }) {
-  const name = product.name ?? product.title ?? "Producto";
+  const { lang } = useI18n();
+  const name = trName(product.name ?? product.title ?? "Producto", lang);
+  const desc = trDesc(product.desc, lang);
   const price = toNumber(product.price);
 
   return (
-    <article className="flex flex-col gap-4 border-b border-[#d7d0b5] py-5 sm:flex-row sm:items-center sm:justify-between">
+    <article className="flex flex-col gap-4 border-b border-[#d7d0b5] py-5 dark:border-[#4d4136] sm:flex-row sm:items-center sm:justify-between">
       <div className="max-w-2xl">
-        <h4 className="text-xl font-bold uppercase tracking-tight text-[#285721]">
+        <h4 className="text-xl font-bold uppercase tracking-tight text-[#285721] dark:text-[#9ec98b]">
           {name}
         </h4>
-        {product.desc && (
-          <p className="mt-1 text-sm leading-relaxed text-[#6d6252]">
-            {product.desc}
+        {desc && (
+          <p className="mt-1 text-sm leading-relaxed text-[#6d6252] dark:text-[#b3a48f]">
+            {desc}
           </p>
         )}
       </div>
@@ -35,7 +41,7 @@ export default function MenuProductRow({ product }: { product: Product }) {
               _id: product._id,
               name,
               price,
-              description: product.desc,
+              description: desc,
             }}
           />
         </div>

@@ -14,7 +14,7 @@ export default function Row({
     <div className="flex items-center justify-between">
       <span
         className={
-          muted ? "text-[var(--muted)]" : "text-zinc-800"
+          muted ? "text-[var(--muted)]" : "text-zinc-800 dark:text-zinc-200"
         }
       >
         {label}
@@ -22,7 +22,9 @@ export default function Row({
 
       <span
         className={
-          strong ? "text-base font-semibold text-zinc-900" : "text-zinc-900"
+          strong
+            ? "text-base font-semibold text-zinc-900 dark:text-zinc-100"
+            : "text-zinc-900 dark:text-zinc-100"
         }
       >
         {value}

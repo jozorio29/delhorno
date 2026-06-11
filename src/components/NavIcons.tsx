@@ -33,7 +33,7 @@ const NavIcons = () => {
     <div className="ml-auto flex items-center">
       <div
         ref={cartRef}
-        className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-[#cfc2ae] bg-white/75 transition hover:border-[var(--brand)] hover:bg-white"
+        className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-[#cfc2ae] bg-white/75 transition hover:border-[var(--brand)] hover:bg-white dark:border-[#604536] dark:bg-[#2a1d16] dark:hover:bg-[#342219]"
         onClick={() => {
           if (!isHydrated) return;
           toggle();

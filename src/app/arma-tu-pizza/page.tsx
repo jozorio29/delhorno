@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import PizzaConfigurator from "@/components/PizzaConfigurator";
@@ -9,6 +10,21 @@ const PIZZA_CATEGORIES = new Set([
   "pizzas-especiales",
   "pizzas-de-la-casa",
 ]);
+
+export const metadata: Metadata = {
+  title: "Armá tu pizza",
+  description:
+    "Elegí el tamaño y combiná tus sabores favoritos para armar una pizza personalizada de Del Horno en Encarnación.",
+  alternates: {
+    canonical: "/arma-tu-pizza",
+  },
+  openGraph: {
+    title: "Armá tu pizza | Del Horno Pizzería",
+    description:
+      "Elegí el tamaño y combiná tus sabores favoritos en una pizza artesanal.",
+    url: "/arma-tu-pizza",
+  },
+};
 
 export default async function BuildYourPizzaPage() {
   const products = await getProducts();

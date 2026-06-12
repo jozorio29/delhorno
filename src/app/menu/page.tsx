@@ -1,8 +1,24 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import ProductGridByCategory from "@/components/ProductGridByCategory";
 import { T } from "@/lib/i18n/LanguageProvider";
 import { getProducts } from "@/lib/products";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Carta de pizzas",
+  description:
+    "Conocé la carta de Del Horno Pizzería: pizzas artesanales, empanadas, calzones, bebidas y cervezas en Encarnación.",
+  alternates: {
+    canonical: "/menu",
+  },
+  openGraph: {
+    title: "Carta de pizzas | Del Horno Pizzería",
+    description:
+      "Pizzas artesanales, empanadas, calzones, bebidas y cervezas en Encarnación.",
+    url: "/menu",
+  },
+};
 
 export default async function MenuPage() {
   const products = await getProducts();

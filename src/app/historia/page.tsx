@@ -4,9 +4,18 @@ import Historia from "@/components/Historia";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Historia | Del Horno",
+  title: "Nuestra historia",
   description:
     "Un viaje de tres años para una sola receta: el origen de Del Horno.",
+  alternates: {
+    canonical: "/historia",
+  },
+  openGraph: {
+    title: "Nuestra historia | Del Horno Pizzería",
+    description:
+      "Un viaje de tres años para una sola receta: el origen de Del Horno.",
+    url: "/historia",
+  },
 };
 
 export default function HistoriaPage() {

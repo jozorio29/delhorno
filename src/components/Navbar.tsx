@@ -38,14 +38,23 @@ const Navbar = () => {
     >
       <div className="flex min-h-20 w-full items-center justify-between gap-2 px-4 py-2 sm:gap-5 md:px-8 lg:px-12">
         <Link href="/" className="shrink-0" aria-label={t("nav_home_aria")}>
-          <span className="relative block h-10 w-24 rounded-xl transition dark:bg-[#f8efe3] dark:px-2 dark:shadow-[0_6px_24px_rgba(0,0,0,0.2)] sm:h-12 sm:w-48 md:h-14 md:w-56">
+          <span className="relative block h-10 w-24 sm:h-12 sm:w-48 md:h-14 md:w-56">
             <Image
               src="/del-horno-brand-v2.png"
               alt="Logo Del Horno Pizza y Birra"
               fill
               priority
               sizes="(max-width: 768px) 192px, 224px"
-              className="object-contain object-left"
+              className="object-contain object-left dark:hidden"
+            />
+            <Image
+              src="/del-horno-brand-dark.png"
+              alt=""
+              fill
+              priority
+              aria-hidden="true"
+              sizes="(max-width: 768px) 192px, 224px"
+              className="hidden object-contain object-left dark:block"
             />
           </span>
         </Link>

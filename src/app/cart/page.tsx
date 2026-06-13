@@ -62,12 +62,12 @@ export default function CartPage() {
       {isEmpty ? (
         <EmptyState />
       ) : (
-        <div className="grid gap-8 md:grid-cols-[1fr_340px]">
-          <div className="stagger-grid space-y-4">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 md:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="stagger-grid min-w-0 space-y-4">
             {items.map((item) => (
               <article
                 key={item.productId}
-                className="glass-surface flex items-start gap-4 rounded-2xl p-4 md:p-5"
+                className="glass-surface flex min-w-0 items-start gap-3 rounded-2xl p-3 sm:gap-4 sm:p-4 md:p-5"
               >
                 {item.image && item.image !== "/placeholder.png" ? (
                   <Image
@@ -75,10 +75,10 @@ export default function CartPage() {
                     alt={item.name}
                     width={96}
                     height={96}
-                    className="h-24 w-24 rounded-xl object-cover ring-1 ring-black/5"
+                    className="h-20 w-20 shrink-0 rounded-xl object-cover ring-1 ring-black/5 sm:h-24 sm:w-24"
                   />
                 ) : (
-                  <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full border-[5px] border-[#d6a65e] bg-[#f3ca72] px-3 text-center text-xs font-black uppercase text-[#6b351c]">
+                  <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border-[5px] border-[#d6a65e] bg-[#f3ca72] px-3 text-center text-[10px] font-black uppercase text-[#6b351c] sm:h-24 sm:w-24 sm:text-xs">
                     Del Horno
                   </div>
                 )}
@@ -100,7 +100,7 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between">
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <button
                         className="h-8 w-8 cursor-pointer rounded-md ring-1 ring-[#d9bba3] transition hover:bg-[#fff0e2] disabled:opacity-50 dark:ring-[#4d4136] dark:hover:bg-white/10"
@@ -122,8 +122,8 @@ export default function CartPage() {
                       </button>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <div className="font-semibold text-zinc-900 dark:text-zinc-100">
+                    <div className="ml-auto flex items-center gap-3 sm:gap-4">
+                      <div className="whitespace-nowrap font-semibold text-zinc-900 dark:text-zinc-100">
                         {formatPY(item.price * item.quantity)}
                       </div>
                       <button

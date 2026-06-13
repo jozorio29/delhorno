@@ -20,7 +20,7 @@ export default function CartDrawer() {
 
   return (
     <div
-      className="glass-surface z-50 flex w-80 max-w-[90vw] flex-col gap-6 rounded-2xl p-4 text-[var(--text)]"
+      className="glass-surface z-50 flex max-h-[calc(100dvh-6.5rem)] w-full flex-col gap-6 overflow-y-auto rounded-2xl p-4 text-[var(--text)] sm:w-80"
     >
       {items.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2 py-10 text-center">
@@ -38,7 +38,7 @@ export default function CartDrawer() {
           <div className="flex flex-col gap-8">
             {/* Cart Item */}
             {items.map((item) => (
-              <div className="flex gap-4" key={item.productId}>
+              <div className="flex min-w-0 gap-3 sm:gap-4" key={item.productId}>
                 {item.image && item.image !== "/placeholder.png" ? (
                   <Image
                     src={item.image}
@@ -53,14 +53,16 @@ export default function CartDrawer() {
                   </div>
                 )}
 
-                <div className="flex flex-col justify-between w-full">
+                <div className="flex min-w-0 w-full flex-col justify-between">
                   {/* TOP */}
                   <div>
                     {/* TITLE */}
-                    <div className="flex items-center justify-between gap-8">
-                      <h3 className="font-semibold">{item.name}</h3>
+                    <div className="flex min-w-0 items-start justify-between gap-2">
+                      <h3 className="min-w-0 truncate font-semibold">
+                        {item.name}
+                      </h3>
 
-                      <div className="flex items-center gap-2 rounded-sm bg-gray-50 p-1 dark:bg-white/10">
+                      <div className="shrink-0 rounded-sm bg-gray-50 p-1 text-sm dark:bg-white/10">
                         {formatPY(item.price)}
                       </div>
                     </div>
@@ -72,7 +74,7 @@ export default function CartDrawer() {
                     )}
                   </div>
                   {/* BOTTOM */}
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => dec(item.productId)}

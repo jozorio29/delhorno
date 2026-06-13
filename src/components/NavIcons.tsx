@@ -46,8 +46,7 @@ const NavIcons = () => {
 
         {isHydrated && isCartOpen && (
           <div
-            // className="absolute left-1/2 top-full -translate-x-1/2 mt-2 z-50"
-            className="absolute right-0 top-full mt-2 z-50"
+            className="fixed inset-x-4 top-[5.5rem] z-50 sm:absolute sm:left-auto sm:right-0 sm:top-full sm:mt-2"
             onClick={(e) => e.stopPropagation()}
           >
             <CartDrawer />

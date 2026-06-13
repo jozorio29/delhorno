@@ -1,7 +1,7 @@
 "use client";
 
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/LanguageProvider";
 
 export default function ThemeToggle({
@@ -12,7 +12,8 @@ export default function ThemeToggle({
   const { t } = useI18n();
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     setMounted(true);
@@ -23,18 +24,28 @@ export default function ThemeToggle({
     if (!floating) return;
 
     let frame = 0;
+    let showTimer: ReturnType<typeof setTimeout>;
+    lastScrollY.current = window.scrollY;
+
     const updateVisibility = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        setScrollProgress(Math.min(window.scrollY / 500, 1));
+        const currentScrollY = window.scrollY;
+        const isScrollingDown = currentScrollY > lastScrollY.current;
+
+        setIsVisible(!isScrollingDown || currentScrollY < 40);
+        lastScrollY.current = currentScrollY;
+
+        clearTimeout(showTimer);
+        showTimer = setTimeout(() => setIsVisible(true), 700);
       });
     };
 
-    updateVisibility();
     window.addEventListener("scroll", updateVisibility, { passive: true });
 
     return () => {
       cancelAnimationFrame(frame);
+      clearTimeout(showTimer);
       window.removeEventListener("scroll", updateVisibility);
     };
   }, [floating]);
@@ -61,11 +72,11 @@ export default function ThemeToggle({
         title={label}
         style={{
           bottom: "calc(1.25rem + env(safe-area-inset-bottom))",
-          opacity: 1 - scrollProgress,
-          transform: `translateY(${scrollProgress * 12}px)`,
-          pointerEvents: scrollProgress > 0.9 ? "none" : "auto",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(12px)",
+          pointerEvents: isVisible ? "auto" : "none",
         }}
-        className="fixed right-4 z-30 flex items-center gap-2 rounded-full border-2 border-[var(--brand)] bg-white px-4 py-3 font-semibold text-zinc-900 shadow-[0_8px_30px_rgba(88,52,27,0.28)] transition-[background-color,color,border-color,box-shadow] dark:bg-[#2a1d16] dark:text-[#ffd6ad] md:hidden"
+        className="fixed right-4 z-50 flex items-center gap-2 rounded-full border-2 border-[var(--brand)] bg-white px-4 py-3 font-semibold text-zinc-900 shadow-[0_8px_30px_rgba(88,52,27,0.28)] transition-[opacity,transform,background-color,color,border-color,box-shadow] duration-300 dark:bg-[#2a1d16] dark:text-[#ffd6ad] md:hidden"
       >
         {mounted && isDark ? (
           <SunIcon className="h-6 w-6 shrink-0" />

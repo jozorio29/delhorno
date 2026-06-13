@@ -78,13 +78,13 @@ const Navbar = () => {
           </div>
 
           <button
-            className="grid h-10 w-10 place-items-center rounded-full border border-[#d8cdbb] bg-white/45 dark:border-[#4d4136] dark:bg-white/10 lg:hidden"
+            className="grid h-9 w-9 place-items-center rounded-full border border-[#d8cdbb] bg-white/45 dark:border-[#4d4136] dark:bg-white/10 sm:h-10 sm:w-10 lg:hidden"
             aria-label={t("nav_open_menu")}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
             <span className="sr-only">{t("nav_open_menu")}</span>
-            <div className="flex w-4 flex-col gap-1">
+            <div className="flex w-3.5 flex-col gap-[3px] sm:w-4 sm:gap-1">
               <span className="h-0.5 w-full bg-zinc-900 dark:bg-zinc-100" />
               <span className="h-0.5 w-full bg-zinc-900 dark:bg-zinc-100" />
               <span className="h-0.5 w-full bg-zinc-900 dark:bg-zinc-100" />
@@ -92,7 +92,9 @@ const Navbar = () => {
           </button>
 
           <div className="flex shrink-0 items-center gap-2">
-            <LanguageSelector />
+            <div className="hidden md:block">
+              <LanguageSelector />
+            </div>
             <div className="hidden md:block">
               <ThemeToggle />
             </div>
@@ -117,6 +119,7 @@ const Navbar = () => {
           </div>
         )}
       </header>
+      <LanguageSelector floating />
       <ThemeToggle floating />
     </>
   );

@@ -31,12 +31,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header
-      className={`site-navbar sticky top-0 z-40 ${
-        isScrolled ? "site-navbar--scrolled" : ""
-      }`}
-    >
-      <div className="flex min-h-20 w-full items-center justify-between gap-2 px-4 py-2 sm:gap-5 md:px-8 lg:px-12">
+    <>
+      <header
+        className={`site-navbar sticky top-0 z-40 ${
+          isScrolled ? "site-navbar--scrolled" : ""
+        }`}
+      >
+        <div className="flex min-h-20 w-full items-center justify-between gap-2 px-4 py-2 sm:gap-5 md:px-8 lg:px-12">
         <Link href="/" className="shrink-0" aria-label={t("nav_home_aria")}>
           <span className="relative block h-10 w-24 sm:h-12 sm:w-48 md:h-14 md:w-56">
             <Image
@@ -92,28 +93,32 @@ const Navbar = () => {
 
           <div className="flex shrink-0 items-center gap-2">
             <LanguageSelector />
-            <ThemeToggle />
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
-      </div>
+        </div>
 
-      {open && (
-        <div className="border-t border-[#d8cdbb]/80 bg-[rgba(var(--bg-veil),0.96)] px-4 py-3 shadow-xl backdrop-blur-xl dark:border-[#4d4136]/80 lg:hidden">
-          <div className="container-shell flex flex-col gap-2 px-0">
-            {NAV.map((item) => (
-              <Link
-                href={item.href}
-                key={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-[#fff0e2] dark:hover:bg-white/10"
-                onClick={() => setOpen(false)}
-              >
-                {t(item.labelKey)}
-              </Link>
-            ))}
+        {open && (
+          <div className="border-t border-[#d8cdbb]/80 bg-[rgba(var(--bg-veil),0.96)] px-4 py-3 shadow-xl backdrop-blur-xl dark:border-[#4d4136]/80 lg:hidden">
+            <div className="container-shell flex flex-col gap-2 px-0">
+              {NAV.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-[#fff0e2] dark:hover:bg-white/10"
+                  onClick={() => setOpen(false)}
+                >
+                  {t(item.labelKey)}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
+      <ThemeToggle floating />
+    </>
   );
 };
 

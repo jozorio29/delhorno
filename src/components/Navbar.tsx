@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useI18n } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/translations";
 import LanguageSelector from "./LanguageSelector";
@@ -21,13 +22,25 @@ const Navbar = () => {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isThemeToggleVisible, setIsThemeToggleVisible] = useState(true);
 
   useEffect(() => {
-    const updateNavbar = () => setIsScrolled(window.scrollY > 24);
+    setIsMounted(true);
+    let showThemeTimer: ReturnType<typeof setTimeout>;
+    const updateNavbar = () => {
+      setIsScrolled(window.scrollY > 24);
+      setIsThemeToggleVisible(false);
+      clearTimeout(showThemeTimer);
+      showThemeTimer = setTimeout(() => setIsThemeToggleVisible(true), 500);
+    };
 
-    updateNavbar();
+    setIsScrolled(window.scrollY > 24);
     window.addEventListener("scroll", updateNavbar, { passive: true });
-    return () => window.removeEventListener("scroll", updateNavbar);
+    return () => {
+      clearTimeout(showThemeTimer);
+      window.removeEventListener("scroll", updateNavbar);
+    };
   }, []);
 
   return (
@@ -95,9 +108,6 @@ const Navbar = () => {
             <div className="hidden md:block">
               <LanguageSelector />
             </div>
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
           </div>
         </div>
         </div>
@@ -119,6 +129,23 @@ const Navbar = () => {
           </div>
         )}
       </header>
+      {isMounted &&
+        createPortal(
+          <div
+            className="fixed right-5 z-50 hidden transition-[opacity,transform] duration-300 md:block lg:right-8"
+            style={{
+              bottom: "calc(1.5rem + env(safe-area-inset-bottom))",
+              opacity: isThemeToggleVisible ? 0.75 : 0,
+              transform: isThemeToggleVisible
+                ? "translateY(0)"
+                : "translateY(10px)",
+              pointerEvents: isThemeToggleVisible ? "auto" : "none",
+            }}
+          >
+            <ThemeToggle />
+          </div>,
+          document.body
+        )}
     </>
   );
 };

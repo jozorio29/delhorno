@@ -2,6 +2,7 @@
 
 import CartSummary from "@/components/checkout/CartSummary";
 import EmptyState from "@/components/EmptyState";
+import Footer from "@/components/Footer";
 import { useI18n } from "@/lib/i18n/LanguageProvider";
 import { formatPY } from "@/lib/money";
 import { useCart, useHydration } from "@/store/useCart";
@@ -41,7 +42,8 @@ export default function CartPage() {
   }
 
   return (
-    <section className="container-shell reveal py-12 md:py-16">
+    <>
+      <section className="container-shell reveal py-12 md:py-16">
       <div className="reveal reveal-1 mb-7 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold tracking-[0.2em] text-[#ad4f2b] dark:text-[#e08a6a]">
@@ -152,6 +154,8 @@ export default function CartPage() {
           <CartSummary subtotal={subtotal} />
         </div>
       )}
-    </section>
+      </section>
+      <Footer />
+    </>
   );
 }

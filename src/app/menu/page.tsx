@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProductGridByCategory from "@/components/ProductGridByCategory";
 import { T } from "@/lib/i18n/LanguageProvider";
@@ -61,6 +62,7 @@ export default async function MenuPage() {
 
         <ProductGridByCategory products={products} />
       </section>
+      <Footer />
     </>
   );
 }

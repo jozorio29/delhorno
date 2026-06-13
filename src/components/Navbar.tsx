@@ -119,8 +119,6 @@ const Navbar = () => {
           </div>
         )}
       </header>
-      <LanguageSelector floating />
-      <ThemeToggle floating />
     </>
   );
 };

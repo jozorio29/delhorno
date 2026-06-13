@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import LanguageSelector from "./LanguageSelector";
+import ThemeToggle from "./ThemeToggle";
 
 const InstagramIcon = () => (
   <svg
@@ -32,30 +34,41 @@ const Footer = () => {
   return (
     <footer className="border-t border-[var(--line)] bg-[rgba(var(--bg-veil),0.9)] py-10 text-sm backdrop-blur">
       <div className="container-shell">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <p className="text-[var(--muted)]">
-            © {new Date().getFullYear()} Encarnación, Paraguay
-          </p>
-          <div className="flex items-center gap-3">
-            <span className="font-semibold">Del Horno | Pizza</span>
-            <a
-              href="https://www.instagram.com/delhornopizzeria/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram de Del Horno Pizzería"
-              className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line-strong)] text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-[var(--surface-strong)] hover:text-[var(--brand)]"
-            >
-              <InstagramIcon />
-            </a>
-            <a
-              href="https://www.facebook.com/people/Del-Horno-Pizzeria/61582955600278/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook de Del Horno Pizzería"
-              className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line-strong)] text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-[var(--surface-strong)] hover:text-[var(--brand)]"
-            >
-              <FacebookIcon />
-            </a>
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-[var(--muted)]">
+              © {new Date().getFullYear()} Encarnación, Paraguay
+            </p>
+            <div className="md:hidden">
+              <LanguageSelector compact />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className="font-semibold">Del Horno | Pizza</span>
+              <a
+                href="https://www.instagram.com/delhornopizzeria/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram de Del Horno Pizzería"
+                className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line-strong)] text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-[var(--surface-strong)] hover:text-[var(--brand)]"
+              >
+                <InstagramIcon />
+              </a>
+              <a
+                href="https://www.facebook.com/people/Del-Horno-Pizzeria/61582955600278/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook de Del Horno Pizzería"
+                className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line-strong)] text-[var(--text)] transition hover:border-[var(--brand)] hover:bg-[var(--surface-strong)] hover:text-[var(--brand)]"
+              >
+                <FacebookIcon />
+              </a>
+            </div>
+            <div className="md:hidden">
+              <ThemeToggle compact />
+            </div>
           </div>
         </div>
       </div>
